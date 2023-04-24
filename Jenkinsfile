@@ -16,7 +16,7 @@ pipeline {
         stage('CD') {
             environment {
                 STACK_NAME = 'cont-del'
-                S3_BUCKET = 'mybucket-nk2'
+                S3_BUCKET = 'jenkins-bucketnkn7'
             }
             steps {
                 withAWS(credentials: 'foraws', region: 'ap-south-1') {
