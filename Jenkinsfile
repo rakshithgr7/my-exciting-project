@@ -1,25 +1,25 @@
 pipeline {
     agent {
-        label 'docker-slave'
+        label 'kesariya'
     }
     stages {
         stage('Code Clone') {
             steps {
-                git branch: 'master', url: 'https://github.com/nk-naveen/Jenkins-assign'
+                git branch: 'main', url: 'https://github.com/rakshithgr7/my-exciting-project'
             }
         }
         stage('CI') {
             steps {
-                sh 'python3 $WORKSPACE/cal_app/TestCalculator.py'
+                sh 'python3 $WORKSPACE/jenkins/TestCalculator.py'
             }
         }
         stage('CD') {
             environment {
                 STACK_NAME = 'cont-del'
-                S3_BUCKET = 'aws-sam-cli-managed-default-samclisourcebucket-mj6zdx1naar'
+                S3_BUCKET = 'mybucket-nk2'
             }
             steps {
-                withAWS(credentials: 'jenkins-creds', region: 'us-east-1') {
+                withAWS(credentials: 'foraws', region: 'ap-south-1') {
                     sh 'sam deploy --stack-name $STACK_NAME -t template.yaml --s3-bucket $S3_BUCKET --capabilities CAPABILITY_IAM'
                 }
             }
